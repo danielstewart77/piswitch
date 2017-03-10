@@ -1,0 +1,31 @@
+{
+  "name": "demoswitch",
+  "version": "1.0.0",
+  "description": "node api to switch pi gpio",
+  "main": "switchserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielstewart77/piswitch.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "gpio",
+    "solid",
+    "state",
+    "relay"
+  ],
+  "author": "Daniel Stewart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielstewart77/piswitch/issues"
+  },
+  "homepage": "https://github.com/danielstewart77/piswitch#readme",
+  "dependencies": {
+    "connect": "^3.6.0",
+    "express": "^4.15.2"
+  }
+}
