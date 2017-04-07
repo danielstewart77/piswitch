@@ -1,23 +1,34 @@
 /**
  * Created by dstewart on 3/10/2017.
  */
+/**
+ * MYCLIENT.JS
+ * an example web app using an ajax request to our API server which returns a JSON object
+ *
+ * When a user opens index.html it then loads and executes this JavaScript code, which reads
+ * the current logic level on the input ports, and displays that in the window, each in a div
+ * identified by the index "inputs_[port number]"
+ */
+
 window.onload = function () {
     var url,
         i,
-        jqxhr;
+        ports = [23, 25];  // the GPIO ports we will read
 
-    for (i = 0; i < 2; i++) {
-        url = document.URL + 'inputs/' + i;
-        jqxhr = $.getJSON(url, function(data) {
-            console.log('API response received');
-            $('#input').append('<p>input gpio port ' + data['gpio'] + ' on pin ' +
-                data['pin'] + ' has current value ' + data['value'] + '</p>');
-        });
-    }
-};
-
-setInterval( function () {
     for (i in ports) {
-// call the API for each input port here
+        $('#input_' + ports[i]).html('loading port ' + ports[i] + ' value...');
     }
-}, 1000); // setInterval to 1 second
+
+    setInterval( function () {
+        for (i in ports) {
+            url = document.URL + 'inputs/' + ports[i];
+            console.log('making API call ' + url);
+
+            $.getJSON(url, function (data) {
+                console.log('API response received. port ' + data.gpio + ' value = ' + data.value);
+                $('#input_' + data.gpio).html('GPIO input port ' + data.gpio + ' value is ' + data.value);
+            });
+        } // for
+    }, 1000); // setInterval
+
+}; //onload

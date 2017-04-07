@@ -32,7 +32,7 @@ setInterval( function () {
         if (err) {
             throw err;
         }
-        console.log('read pin ' + inputs[0].pin + ' value = ' + value);
+        //console.log('read pin ' + inputs[0].pin + ' value = ' + value);
         // update the inputs object
         inputs[0].value = value.toString(); // store value as a string
     });
@@ -41,10 +41,28 @@ setInterval( function () {
         if (err) {
             throw err;
         }
-        console.log('read pin ' + inputs[1].pin + ' value = ' + value);
+        //console.log('read pin ' + inputs[1].pin + ' value = ' + value);
         inputs[1].value = value.toString();
     });
 }, 500); // setInterval
+
+
+// put
+app.put('/inputs/:id', function (req, res){
+    console.log('received API put request for port number ' + req.params.id);
+
+    //if (inputs.)
+
+    for (i in inputs){
+        if ((req.params.id === inputs[i].gpio)) {
+            // send to client an inputs object as a JSON string
+            res.send(inputs[i]);
+            return;
+        }
+    }
+});
+
+
 
 // ------------------------------------------------------------------------
 // configure Express to serve index.html and any other static pages stored
