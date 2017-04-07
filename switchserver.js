@@ -51,7 +51,26 @@ setInterval( function () {
 app.put('/inputs/:id', function (req, res){
     console.log('received API put request for port number ' + req.params.id);
 
-    //if (inputs.)
+    if (req.params.id in inputs){
+        console.log(req.params.id + ' found in ' + inputs);
+        if (inputs[req.params.id].value == 0){
+            gpio.open(Number(inputs[req.params.id].pin), "output", function(err)){
+                gpio.write(Number(inputs[req.params.id].pin), 1, function()){
+                    gpio.close(Number(inputs[req.params.id].pin));
+                });
+            });
+        }
+        else{
+            gpio.open(Number(inputs[req.params.id].pin), "output", function(err)){
+                gpio.write(Number(inputs[req.params.id].pin), 0, function()){
+                    gpio.close(Number(inputs[req.params.id].pin));
+                });
+            });
+        }
+    }
+    else{
+        console.log(req.params.id + ' not found in ' + inputs);
+    }
 
     for (i in inputs){
         if ((req.params.id === inputs[i].gpio)) {
