@@ -54,15 +54,15 @@ app.put('/inputs/:id', function (req, res){
     if (req.params.id in inputs){
         console.log(req.params.id + ' found in ' + inputs);
         if (inputs[req.params.id].value == 0){
-            gpio.open(Number(inputs[req.params.id].pin), "output", function(err)){
-                gpio.write(Number(inputs[req.params.id].pin), 1, function()){
+            gpio.open(Number(inputs[req.params.id].pin), "output", function(err){
+                gpio.write(Number(inputs[req.params.id].pin), 1, function(){
                     gpio.close(Number(inputs[req.params.id].pin));
                 });
             });
         }
         else{
-            gpio.open(Number(inputs[req.params.id].pin), "output", function(err)){
-                gpio.write(Number(inputs[req.params.id].pin), 0, function()){
+            gpio.open(Number(inputs[req.params.id].pin), "output", function(err){
+                gpio.write(Number(inputs[req.params.id].pin), 0, function(){
                     gpio.close(Number(inputs[req.params.id].pin));
                 });
             });
