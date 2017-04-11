@@ -10,6 +10,7 @@
  * identified by the index "inputs_[port number]"
  */
 
+/**
 window.onload = function () {
     var url,
         i,
