@@ -6,9 +6,6 @@ var http      = require('http');
 var express   = require('express');
 var Gpio      = require('onoff').Gpio;
 
-heat = new Gpio(7, 'out');
-ac = new Gpio(18, 'out');
-
 var app       = express();
 
 var pins = {};
@@ -93,6 +90,8 @@ function toggle(state){
 }*/
 
 function toggleState(pin, callback){
+
+    heat = new Gpio(7, 'out');
 
     var oldState = heat.readSync();
     var newState = heat.readSync() === 0 ? 1 : 0;
