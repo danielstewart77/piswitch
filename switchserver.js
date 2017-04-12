@@ -94,13 +94,15 @@ function toggle(state){
 
 function toggleState(pin, callback){
 
-    console.log('toggle pin ' + pin + ' from ' + heat.readSync() + ' to ' + heat.readSync() === 0 ? 1 : 0);
+    var oldState = heat.readSync();
+    var newState = heat.readSync() === 0 ? 1 : 0;
+    console.log('toggle pin ' + pin + ' from ' + oldState + ' to ' + newState);
     heat.writeSync(heat.readSync() === 0 ? 1 : 0);
     console.log('toggle successful');
-    callback(heat.readSync());
+    var newState = heat.readSync()
     heat.unexport();
     console.log('closed pin ' + pin);
-
+    callback(newState);
 
     /*
     gpio.open(pin, "output", function(err){
