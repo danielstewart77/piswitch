@@ -21,7 +21,7 @@ pins['16'] = null;
 pins['18'] = null;
 pins['22'] = null;
 
-
+/*
 
 // -----------------------------------------------------------------------
 // populate GPIO pin values
@@ -32,7 +32,7 @@ for (var pin in pins) {
         pins[pin] = state;
     }) 
 }
-
+*/
 
 /*
 // ------------------------------------------------------------------------
@@ -61,7 +61,7 @@ setInterval( function () {
 
 
 
-function read(pin, callback){
+/*function read(pin, callback){
 
     gpio.open(pin, "input", function(err){
         if (err){
@@ -90,12 +90,17 @@ function toggle(state){
         return 0;
     }
     throw 'pin has no state';
-}
+}*/
 
 function toggleState(pin, callback){
 
+    console.log('toggle pin ' + pin + ' from ' + heat.readSync() + ' to ' + heat.readSync() === 0 ? 1 : 0);
     heat.writeSync(heat.readSync() === 0 ? 1 : 0);
+    console.log('toggle successful');
+    callback(heat.readSync());
     heat.unexport();
+    console.log('closed pin ' + pin);
+
 
     /*
     gpio.open(pin, "output", function(err){
@@ -129,7 +134,7 @@ app.get('/pin/:id', function (req, res) {
 
     console.log('received API get request for pin number ' + req.params.id);
 
-    if (req.params.id in pins){
+    /*if (req.params.id in pins){
 
         read(req.params.id, function(state){
             console.log('current state: ' + state);
@@ -140,7 +145,7 @@ app.get('/pin/:id', function (req, res) {
     else{
         console.log('invalid pin number');
         res.status(403).send('invalid pin number ' + req.params.id);
-    }
+    }*/
 });
 
 // put
@@ -169,7 +174,7 @@ app.put('/pin/:id', function (req, res){
 app.get('/pins', function (req, res) {
     // send array of inputs objects as a JSON string
     console.log('all inputs');
-    res.status(200).send(pins);
+    //res.status(200).send(pins);
 }); // apt.get()
 
 // Express route for any other unrecognised incoming requests
