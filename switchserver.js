@@ -4,7 +4,10 @@
 
 var http      = require('http');
 var express   = require('express');
-var gpio      = require('pi-gpio');
+var Gpio      = require('onoff').Gpio;
+
+heat = new Gpio(7, 'out');
+ac = new Gpio(18, 'out');
 
 var app       = express();
 
@@ -28,7 +31,7 @@ for (var pin in pins) {
         console.log('pin ' + pin + 'current state: ' + state);
         pins[pin] = state;
     }) 
-} // if
+}
 
 
 /*
@@ -91,6 +94,10 @@ function toggle(state){
 
 function toggleState(pin, callback){
 
+    heat.writeSync(heat.readSync() === 0 ? 1 : 0);
+    heat.unexport();
+
+    /*
     gpio.open(pin, "output", function(err){
         console.log('toggle pin ' + pin + ' from ' + pins[pin] + ' to ' + toggle(pins[pin]))
         gpio.write(pin, toggle(pins[pin]), function(err){
@@ -110,6 +117,7 @@ function toggleState(pin, callback){
             throw err;
         }
     });
+    */
 }
 
 // ------------------------------------------------------------------------
