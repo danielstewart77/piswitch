@@ -18,8 +18,6 @@ pins['16'] = null;
 pins['18'] = null;
 pins['22'] = null;
 
-
-
 // -----------------------------------------------------------------------
 // populate GPIO pin values
 for (var pin in pins) {
@@ -28,35 +26,7 @@ for (var pin in pins) {
         console.log('pin ' + pin + 'current state: ' + state);
         pins[pin] = state;
     }) 
-} // if
-
-
-/*
-// ------------------------------------------------------------------------
-// read and store the GPIO inputs twice a second
-setInterval( function () {
-    gpio.read(inputs[0].pin, function (err, value) {
-        if (err) {
-            throw err;
-        }
-        //console.log('read pin ' + inputs[0].pin + ' value = ' + value);
-        // update the inputs object
-        inputs[0].value = value.toString(); // store value as a string
-    });
-
-    gpio.read(inputs[1].pin, function (err, value) {
-        if (err) {
-            throw err;
-        }
-        //console.log('read pin ' + inputs[1].pin + ' value = ' + value);
-        inputs[1].value = value.toString();
-    });
-}, 500); // setInterval
-
-*/
-
-
-
+}
 
 function read(pin, callback){
 
@@ -157,10 +127,9 @@ app.put('/pin/:id', function (req, res){
     }
 });
 
-// Express route for incoming requests for a list of all inputs
+// Express route for incoming requests for a list of all pins states
 app.get('/pins', function (req, res) {
-    // send array of inputs objects as a JSON string
-    console.log('all inputs');
+    console.log('all pins');
     res.status(200).send(pins);
 }); // apt.get()
 
