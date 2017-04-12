@@ -18,18 +18,18 @@ pins['16'] = null;
 pins['18'] = null;
 pins['22'] = null;
 
-/*
+var devices = {};
 
 // -----------------------------------------------------------------------
 // populate GPIO pin values
 for (var pin in pins) {
+    devices[pin] = new Gpio(pin, 'out');
     console.log('reading GPIO pin ' + pin);
-    read(pin, function(state){
-        console.log('pin ' + pin + 'current state: ' + state);
-        pins[pin] = state;
-    }) 
+    var state = devices[pin].readSync();
+    console.log('pin ' + pin + 'current state: ' + state);
+    pins[pin] = state;
 }
-*/
+
 
 /*
 // ------------------------------------------------------------------------
@@ -90,15 +90,12 @@ function toggle(state){
 }*/
 
 function toggleState(pin, callback){
-
-    device = new Gpio(pin, 'out');
-
-    var oldState = device.readSync();
-    var newState = device.readSync() === 0 ? 1 : 0;
+    var oldState = devices[pin].readSync();
+    var newState = devices[pin].readSync() === 0 ? 1 : 0;
     console.log('toggle pin ' + pin + ' from ' + oldState + ' to ' + newState);
-    device.writeSync(device.readSync() === 0 ? 1 : 0);
+    devices[pin].writeSync(devices[pin].readSync() === 0 ? 1 : 0);
     console.log('toggle successful');
-    var newState = device.readSync()
+    var newState = devices[pin].readSync()
     //device.unexport();
     console.log('closed pin ' + pin);
     callback(newState);
@@ -194,6 +191,12 @@ app.use(function (err, req, res, next) {
 
 process.on('SIGINT', function() {
     console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
+
+    for (var pin in pins) {
+        console.log('closing GPIO pin ' + pin);
+        devices[pin].unexport();
+    }
+
     process.exit();
 });
 
