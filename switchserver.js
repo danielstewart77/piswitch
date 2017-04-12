@@ -99,7 +99,7 @@ function toggleState(pin, callback){
     device.writeSync(device.readSync() === 0 ? 1 : 0);
     console.log('toggle successful');
     var newState = device.readSync()
-    device.unexport();
+    //device.unexport();
     console.log('closed pin ' + pin);
     callback(newState);
 
